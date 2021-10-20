@@ -4,25 +4,13 @@ const app = express()
 
 const connectDB = require('./db/connection')
 const bookRouter = require('./routes/book')
-
-const data = [
-    {
-        id:1,
-        name:'alson' 
-    },
-    {
-        id:2,
-        name:'saliipa' 
-    },
-
-]
+const supplierRouter = require('./routes/supplier')
 
 app.use(cors())
 app.use(express.json())
 app.use('/api/v1/books',bookRouter)
-app.get('/test',(req,res)=>{
-    res.json({data})
-})
+app.use('/api/v1/suppliers', supplierRouter)
+
 
 const port = 5000
 
