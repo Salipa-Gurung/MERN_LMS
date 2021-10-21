@@ -13,6 +13,9 @@ import AddSupplier from './components/suppliers/addSupplier'
 import EditSupplier from './components/suppliers/editSupplier'
 import Navbar from './components/navbar/navbar';
 import Sidebar from './components/sidebar/sidebar';
+import Home from './components/pages/home/home';
+import Register from './components/pages/register/register';
+import Login from './components/pages/login/login';
 
 // top: react imports -> third-party import -> css import/styled components -> last: our own module 
 
@@ -20,40 +23,53 @@ function App() {
 
   return (
     <Router>
-      <div className={styles.wrapper}>
-        <Sidebar/>
-        <div className={styles.main}>
+      <Switch>
+        <Route path='/' exact>
+          <Home/>
+        </Route>
+        <Route path='/register'>
+          <Register/>
+        </Route>
+        <Route path='/login'>
+          <Login/>
+        </Route>
+        <Route path='*'>
+          <div className={styles.wrapper}>
+            <Sidebar/>
+            <div className={styles.main}>
 
-          <Navbar/>
-            <Switch>
-              <Route path="/book" exact>
-                <BookList/>
-              </Route>
-              <Route path="/book/create">
-                <CreateBook/>
-              </Route>
-              <Route path="/book/edit/:id">
-                <EditBook/>
-              </Route>
-              <Route path="/book/:id">
-                <BookDetail/>
-              </Route>
+              <Navbar/>
+                <Switch>
+                  <Route path="/book" exact>
+                    <BookList/>
+                  </Route>
+                  <Route path="/book/create">
+                    <CreateBook/>
+                  </Route>
+                  <Route path="/book/edit/:id">
+                    <EditBook/>
+                  </Route>
+                  <Route path="/book/:id">
+                    <BookDetail/>
+                  </Route>
 
-              <Route path="/suppliers" exact>
-                <SupplierList/>
-              </Route>
-              <Route path="/suppliers/create">
-                <AddSupplier/>
-              </Route>
-              <Route path="/supplier/edit/:id">
-                <EditSupplier/>
-              </Route>
-              <Route path="/supplier/:id">
-                <SupplierDetail/>
-              </Route>
-            </Switch>
-        </div>
-      </div>
+                  <Route path="/suppliers" exact>
+                    <SupplierList/>
+                  </Route>
+                  <Route path="/suppliers/create">
+                    <AddSupplier/>
+                  </Route>
+                  <Route path="/supplier/edit/:id">
+                    <EditSupplier/>
+                  </Route>
+                  <Route path="/supplier/:id">
+                    <SupplierDetail/>
+                  </Route>
+                </Switch>
+            </div>
+          </div>
+        </Route>
+      </Switch>
     </Router>
   );
 }
