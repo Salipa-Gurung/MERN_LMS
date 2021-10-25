@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { useParams } from 'react-router'
-import axios from 'axios'
 import Show from '../../layouts/crudLayout/Show'
+import { getBook } from '../../api'
 
 const BookDetail = () => {
     const {id} = useParams()
@@ -17,7 +17,7 @@ const BookDetail = () => {
     })
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/v1/books/${id}`).then((res)=>{
+        getBook(id).then((res)=>{
         setBook(res.data.book)}).catch((error)=>console.log(error))
     }, [])
 
@@ -32,7 +32,7 @@ const BookDetail = () => {
                 </div>
                 <div className="col-md-6 mt-4">
                     <b>Genre:</b> {book.genres.map((genre,i)=>(
-                            <span className="badge bg-success rounded-pill">{genre}</span>
+                            <span key={i} className="badge bg-success rounded-pill">{genre}</span>
                         ))}
                 </div>
                 <div className="col-md-6 mt-4">

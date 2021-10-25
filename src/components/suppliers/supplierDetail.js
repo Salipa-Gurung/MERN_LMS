@@ -1,7 +1,8 @@
 import React, { useState,useEffect } from 'react'
 import { useParams } from 'react-router'
-import axios from 'axios'
+import { getSupplier } from '../../api'
 import Show from '../../layouts/crudLayout/Show'
+
 
 const SupplierDetail = () => {
     const {id} = useParams()
@@ -15,7 +16,7 @@ const SupplierDetail = () => {
     })
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/v1/suppliers/${id}`).then((res)=>{
+        getSupplier(id).then((res)=>{
         setSupplier(res.data.supplier)}).catch((error)=>console.log(error))
     }, [])
 

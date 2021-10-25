@@ -1,6 +1,6 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import Form from '../../layouts/crudLayout/Form'
+import { createSupplier } from '../../api'
 
 const AddSupplier = () => {
 
@@ -20,8 +20,7 @@ const AddSupplier = () => {
 
     const handleSubmit = (event)=>{
         event.preventDefault()
-        axios.post('http://localhost:5000/api/v1/suppliers', supplier)
-            .then(res => console.log(res.data))
+        createSupplier(supplier).then(res => console.log(res.data))
         console.log(supplier)
         setSupplier({
             name:"",

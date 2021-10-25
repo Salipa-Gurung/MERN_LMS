@@ -1,8 +1,9 @@
-import axios from 'axios'
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import { Edit3, Eye, Trash2 } from 'react-feather'
 import { Link } from 'react-router-dom'
+import { fetchBooks } from '../../api'
 import ListLayout from '../../layouts/crudLayout/List'
+import { deleteBook } from '../../api'
 
 const cHeader = [
     'Name',
@@ -15,25 +16,27 @@ const BookList = () => {
 
     const [books,setBooks] = useState([])
 
-    const deleteBook = (id)=>{
-        if(window.confirm("Are you sure you want to delete?"))
-        axios.delete(`http://localhost:5000/api/v1/books/${id}`)
-            .then((res) => console.log(res.data))
+    useEffect(() => {
+        fetchBooks().then(res=>setBooks(res.data.books))
+    }, [])    
 
-        window.location.reload()
-        console.log(`Book deleted with id:${id}`)
+    const handleDelete = (id)=>{
+        if(window.confirm("Are you sure you want to delete?"))
+            {deleteBook(id).then((res) => console.log(res.data))
+                window.location.reload()
+            }
     }
     return (
-        <ListLayout title="Book" createLink="book" apiLink="books" columnHeaders={cHeader} setDatas={setBooks}>
+        <ListLayout title="Book" createLink="book" columnHeaders={cHeader}>
              <tbody>
                 {
                     books.map(book => (
-                        <tr>
+                        <tr key={book.name}>
                             <td>{book.name}</td>
                             <td>{book.author}</td>
                             <td>{
                                     book.genres.map((genre,i)=>(
-                                        <span className="badge bg-success rounded-pill">{genre}</span>
+                                        <span key={i} className="badge bg-success rounded-pill">{genre}</span>
                                     ))
                                 }
                             </td>
@@ -45,7 +48,7 @@ const BookList = () => {
                                 <Link to={`/book/edit/${book._id}`}>
                                     <Edit3/>
                                 </Link>
-                                <a href="#" onClick={()=>deleteBook(book._id)}>
+                                <a href="#" onClick={()=>handleDelete(book._id)}>
                                     <Trash2/>
                                 </a>
                             </td>

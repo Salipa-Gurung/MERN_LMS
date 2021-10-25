@@ -1,18 +1,7 @@
-import axios from 'axios'
-import React,{useEffect} from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
-const ListLayout = ({title,children,createLink,apiLink,columnHeaders,setDatas}) => {
-
-    useEffect(() => {
-        axios.get(`http://localhost:5000/api/v1/${apiLink}`).then((res)=>{
-            if(apiLink === 'books'){
-                setDatas(res.data.books)
-            }else{
-                setDatas(res.data.suppliers)
-            }
-        })
-    }, [])
+const ListLayout = ({title,children,createLink,columnHeaders}) => {
 
     return (
         <div className="card"> 
@@ -23,7 +12,7 @@ const ListLayout = ({title,children,createLink,apiLink,columnHeaders,setDatas}) 
                 <table className="table">
                     <thead>
                         <tr>
-                            {columnHeaders.map(header => (<th>{header}</th>))}
+                            {columnHeaders.map((header,i) => (<th key={i}>{header}</th>))}
                             <th>Action</th>
                         </tr>
                     </thead>

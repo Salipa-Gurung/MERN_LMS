@@ -1,5 +1,5 @@
-import axios from 'axios'
 import React, { useState } from 'react'
+import { createBook } from '../../api'
 import Form from '../../layouts/crudLayout/Form'
 
 const CreateBook = () => {
@@ -25,10 +25,9 @@ const CreateBook = () => {
         setBook({...book,[name]:value})
     }
 
-    const handleSubmit = (event)=>{
+    const handleSubmit =  (event)=>{
         event.preventDefault()
-        axios.post('http://localhost:5000/api/v1/books', book)
-            .then(res => console.log(res.data))
+        createBook(book).then(res => console.log(res.data))
         console.log(book)
         setBook({
             name:"",

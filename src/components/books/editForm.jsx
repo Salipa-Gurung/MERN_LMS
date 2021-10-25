@@ -1,7 +1,7 @@
-import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import Form from '../../layouts/crudLayout/Form'
+import { getBook , editBook } from '../../api'
 
 const EditBook = () => {
 
@@ -16,7 +16,7 @@ const EditBook = () => {
     })
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/v1/books/${id}`).then((res)=>{
+        getBook(id).then((res)=>{
         setBook(res.data.book)}).catch((error)=>console.log(error))
     }, [])
 
@@ -35,8 +35,7 @@ const EditBook = () => {
 
     const handleSubmit = (event)=>{
         event.preventDefault()
-        axios.patch(`http://localhost:5000/api/v1/books/${id}`, book)
-            .then(res => console.log(res.data))
+        editBook(id,book).then(res => console.log(res.data))
         window.location.href = '/book'
         console.log(book)
     }

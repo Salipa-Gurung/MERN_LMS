@@ -1,7 +1,7 @@
-import axios from 'axios'
-import React,{useState} from 'react'
+import React,{useState , useEffect} from 'react'
 import { Edit3, Eye, Trash2 } from 'react-feather'
 import { Link } from 'react-router-dom'
+import { fetchSuppliers , deleteSupplier} from '../../api'
 import ListLayout from '../../layouts/crudLayout/List'
 
 
@@ -15,20 +15,24 @@ const SupplierList = () => {
 
     const [suppliers,setSuppliers] = useState([])
 
-    const deleteSupplier = (id)=>{
-        if(window.confirm("Are you sure you want to delete?"))
-        axios.delete(`http://localhost:5000/api/v1/suppliers/${id}`)
-            .then((res) => console.log(res.data))
+    const getSuppliers = async ()=>{fetchSuppliers().then(res=>setSuppliers(res.data.suppliers))}
 
-        window.location.reload()
-        console.log(`Supplier deleted with id:${id}`)
+    useEffect(() => {
+        getSuppliers()
+    }, [])
+
+    const handleDelete = (id)=>{
+        if(window.confirm("Are you sure you want to delete?"))
+        {deleteSupplier(id).then((res) => console.log(res.data))
+            window.location.reload()
+        }
     }
     return (
-        <ListLayout title="Suppliers" createLink="suppliers" apiLink="suppliers" columnHeaders={cHeader} setDatas={setSuppliers}>
+        <ListLayout title="Suppliers" createLink="suppliers" columnHeaders={cHeader}>
             <tbody>
                 {
                     suppliers.map(supplier => (
-                        <tr>
+                        <tr key={supplier.contactNumber}>
                             <td>{supplier.name}</td>
                             <td>{supplier.address}</td>
                             <td>{supplier.contactNumber}</td>
@@ -39,7 +43,7 @@ const SupplierList = () => {
                                 <Link to={`/supplier/edit/${supplier._id}`}>
                                     <Edit3/>
                                 </Link>
-                                <a href="#" onClick={()=>deleteSupplier(supplier._id)}>
+                                <a href="#" onClick={()=>handleDelete(supplier._id)}>
                                     <Trash2/>
                                 </a>
                             </td>
