@@ -15,3 +15,8 @@ export const createSupplier = (supplier) => API.post('/suppliers',supplier)
 export const editSupplier = (id,supplier) => API.patch(`/suppliers/${id}`,supplier)
 export const deleteSupplier = (id)=> API.delete(`/suppliers/${id}`)
 export const getSupplier = (id) => API.get(`/suppliers/${id}`)
+
+export const fetchUsers = () => API.get('/users')
+export const editUser = (id,user) => API.patch(`/users/${id}`,user)
+export const deleteUser = (id)=> API.delete(`/users/${id}`)
+export const getUser = (id) => API.get(`/users/${id}`)

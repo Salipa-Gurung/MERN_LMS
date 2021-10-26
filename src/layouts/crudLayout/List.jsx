@@ -1,12 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const ListLayout = ({title,children,createLink,columnHeaders}) => {
+const ListLayout = ({title,children,createLink,columnHeaders,hideCreate=false}) => {
 
     return (
         <div className="card"> 
             <div className="card-header">{title} List
-            <Link to={`/${createLink}/create`} className="float-end btn btn-info">Add {title}</Link>
+            {
+                hideCreate?null:<Link to={`/${createLink}/create`} className="float-end btn btn-info">Add {title}</Link>
+            }
             </div>
             <div className="card-body">
                 <table className="table">
